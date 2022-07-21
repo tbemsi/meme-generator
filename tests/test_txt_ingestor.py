@@ -3,12 +3,12 @@ import unittest
 from QuoteEngine.TXTIngestor import TXTIngestor
 from QuoteEngine.QuoteModel import QuoteModel
 
+
 class Testing(unittest.TestCase):
     def test_parse_should_throw_exception(self):
         path = 'sth.xyz'
 
         self.assertRaises(Exception, TXTIngestor.parse, path)
-
 
     def test_parse_should_return_quotes(self):
         # given
@@ -21,6 +21,7 @@ class Testing(unittest.TestCase):
         # then
         self.assertEqual(len(expected_quotes), len(quotes))
         self.assertListEqual(expected_quotes, quotes)
+
 
 if __name__ == 'main':
     unittest.main()
