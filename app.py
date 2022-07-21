@@ -24,7 +24,6 @@ def setup():
     quotes = []
 
     for quote_file in quote_files:
-        print("I got here!")
         quotes += Ingestor.parse(quote_file)
 
 
@@ -48,6 +47,7 @@ def meme_rand():
     img = random.choice(imgs)
     quote = random.choice(quotes)
     path = meme.make_meme(img, quote.body, quote.author)
+
     return render_template('meme.html', path=path)
 
 
