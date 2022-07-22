@@ -4,7 +4,6 @@ from django.shortcuts import render
 import requests
 from flask import Flask, render_template, abort, request
 
-
 from QuoteEngine.Ingestor import Ingestor
 from MemeGenerator.MemeEngine import MemeEngine
 import meme
@@ -12,6 +11,7 @@ import meme
 app = Flask(__name__)
 
 meme = MemeEngine('./static')
+
 
 def setup():
     """ Load all resources """
@@ -25,7 +25,6 @@ def setup():
 
     for quote_file in quote_files:
         quotes += Ingestor.parse(quote_file)
-
 
     images_path = "./_data/photos/dog/"
 
@@ -63,7 +62,7 @@ def meme_post():
 
     if not request.form["image_url"]:
         return render_template('meme_form.html')
-    
+
     image_url = request.form["image_url"]
     try:
         r = requests.get(image_url, verify=False)
@@ -72,8 +71,7 @@ def meme_post():
     except:
         print('Bad image URL')
         return render_template('meme_form.html')
-    
-    
+
     body = request.form['body']
     author = request.form['author']
     path = meme.make_meme(temp, body, author)

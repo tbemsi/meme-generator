@@ -1,15 +1,18 @@
 from typing import List
+from abc import ABC, abstractmethod
 
 from .QuoteModel import QuoteModel
 
-class IngestorInterface():
+
+class IngestorInterface(ABC):
     allowed_extensions = []
 
     @classmethod
-    def can_ingest(cls, path:str) -> bool:
+    def can_ingest(cls, path: str) -> bool:
         ext = path.split('.')[-1]
         return ext in cls.allowed_extensions
 
     @classmethod
-    def parse(cls, path:str) -> List[QuoteModel]:
+    @abstractmethod
+    def parse(cls, path: str) -> List[QuoteModel]:
         pass
