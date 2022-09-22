@@ -3,6 +3,8 @@ import os
 from django.shortcuts import render
 import requests
 from flask import Flask, render_template, abort, request
+import boto3
+import dotenv
 
 from QuoteEngine.Ingestor import Ingestor
 from MemeGenerator.MemeEngine import MemeEngine
@@ -12,9 +14,18 @@ app = Flask(__name__)
 
 meme = MemeEngine('./static')
 
+load_dotenv()
+
 
 def setup():
     """ Load all resources """
+
+    s3 = boto3.resource(
+        service_name='s3',
+        region_name=os.environ.get('REGION'),
+        aws_access_key_id=os.environ.get('ACCESS_KEY'),
+        aws_secret_access_key=os.environ.get('SECRET_KEY')
+    )
 
     quote_files = ['./_data/DogQuotes/DogQuotesTXT.txt',
                    './_data/DogQuotes/DogQuotesDOCX.docx',
@@ -82,4 +93,4 @@ def meme_post():
 
 
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=True, host='0.0.0.0')
